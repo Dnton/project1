@@ -1,0 +1,41 @@
+body {}
+
+.title {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.hp {
+  display: flex;
+  justify-content: space-between;;
+}
+
+.playerOne {
+  height: 50px;
+  width: 20%;
+  border: 1px solid black;
+}
+
+.enemy {
+  height: 50px;
+  width: 20%;
+  border: 1px solid black;
+}
+
+.roll {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.heatlh {
+  height: 150px;
+  width: 150px;
+}
