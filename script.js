@@ -8,18 +8,21 @@
 // bonus: animation movement, victory music, encounter system.
 
 var currentPlayer = 1
-var enemyRoster = [{ max: 40, src: 'images/Thief.gif'}, {max: 60, src: 'images/Fighter.gif'},
-   {value: 80, max: 80}, {value: 100, max: 100}]
+var enemyRoster = [{ max: 40, src: 'images/monster.png'}, {max: 60, src: 'images/Sephiroth.png'},
+   {value: 80, max: 80, src: 'images/SaferSephiroth.png'}, {value: 100, max: 100}]
 var $playerHp = $('#healthOne')
 var $enemyHp = $('#healthTwo')
 var level = -1
 function init(){
-$playerHp[0].value = 300
-$playerHp[0].max = 300
+$playerHp[0].value = 50
+$playerHp[0].max = 50
 $enemyHp[0].value = 30
 $enemyHp[0].max = 30
-var $initialImage = $('img')
-$initialImage.attr('src', 'images/Fighter.gif' )
+var $initialImageOne = $('img').eq(0)
+$initialImageOne.attr('src', 'images/Cloud.png' )
+var $initialImageTwo = $('img').eq(1)
+$initialImageTwo.attr('id', 'enemy' )
+$initialImageTwo.attr('src', 'images/Belias.gif' )
 }
 
 init()
@@ -28,15 +31,42 @@ function dmgRoll(result) {
   switch(result) {
     case 1:
     case 2:
-      return 20;
-      break;
     case 3:
-    case 4:
-      return 30;
+      return 2;
       break;
+    case 4:
     case 5:
     case 6:
-      return 40;
+      return 4;
+      break;
+    case 6:
+    case 7:
+    case 8:
+      return 6;
+      break;
+    case 9:
+    case 10:
+    case 11:
+      return 8;
+      break;
+    case 12:
+    case 13:
+    case 14:
+      return 10;
+      break;
+    case 15:
+    case 16:
+    case 17:
+      return 12;
+      break;
+    case 18:
+      return 15;
+      break;
+    case 19:
+      return 16;
+      break;
+    case 20:
+      return 20;
       break;
     }
 }
@@ -46,31 +76,27 @@ var $dice = $('.roll');
 $dice.on('click', clickHandler)
 
 function roll() {
-  return Math.floor(Math.random()*6) + 1
+  return Math.floor(Math.random()*20) + 1
 }
 
 function generateEnemy(enemyIndex) {
    $enemyHp[0].value = enemyRoster[enemyIndex].max
    $enemyHp[0].max = enemyRoster[enemyIndex].max
-   var $enemyImage = $('img')
-   $enemyImage.attr('src', enemyRoster[enemyIndex].src )
+   var $enemyImage = $('#enemy')
+   console.log($enemyImage)
+   $enemyImage.attr('src', enemyRoster[enemyIndex].src)
  }
 
 function powerUp () {
-  $playerHp[0].value = $playerHp[0].max + 20
+  $playerHp[0].value = $playerHp[0] + 20
   $playerHp[0].max = $playerHp[0].max + 20
 }
 
 function clickHandler() {
 
-  var hp = document.querySelector('.hp')
-
   applyDmg();
   turnChange();
   checker();
-
-  // var $displayOne = $('.displayOne')
-  // var $displayTwo = $('.displayTwo')
 
   function applyDmg() {
     var damage = dmgRoll(roll())
@@ -99,26 +125,20 @@ function clickHandler() {
       alert("You have won, here comes the next challenger")
       powerUp()
       level++
+      if (level === 4) {
+        alert("You have won the game!!")
+        window.location.reload();
+      }
       generateEnemy(level)
     }
-    if (level === 4) {
-      alert("You have won the game!!")
-      window.location.reload();
-    }
-
-    // if (hpBarTwo.value < 1) {
-    //   alert("You have won, here comes the next challenger")
-    //   hpBarOne.value = 90
-    //   hpBarOne.max = 90
-    //   hpBarTwo.value = 50
-    //   console.log(hpBarOne.value)
-    // }
-    // if (hpBarTwo.value < 1) {
-    //   alert("You have won, here comes the next challenger")
-    //   hpBarOne.value = 100
-    //   hpBarOne.max = 100
-    //   hpBarTwo.value = 60
-    //   console.log(hpBarOne.value)
-    // }
   }
+}
+
+var $potion = $('.potion');
+
+$potion.on('click', heal)
+
+function heal() {
+  if ($playerHp[0].value < 15)
+  $playerHp[0].value = $playerHp[0].value + 20
 }
