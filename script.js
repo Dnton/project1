@@ -88,7 +88,7 @@ function generateEnemy(enemyIndex) {
  }
 
 function powerUp () {
-  $playerHp[0].value = $playerHp[0] + 20
+  $playerHp[0].value = $playerHp[0].value + 20
   $playerHp[0].max = $playerHp[0].max + 20
 }
 
@@ -139,6 +139,41 @@ var $potion = $('.potion');
 $potion.on('click', heal)
 
 function heal() {
-  if ($playerHp[0].value < 15)
-  $playerHp[0].value = $playerHp[0].value + 20
+  if ($playerHp[0].value <= 20)
+    $playerHp[0].value = $playerHp[0].value + 20
 }
+
+var $limitBreak = $('.limitBreak');
+
+$limitBreak.on('click', kaboom)
+
+function kaboom() {
+  var damage = dmgRoll(roll())
+  checker();
+  if ($playerHp[0].value <= 20) {
+    $enemyHp[0].value = $enemyHp[0].value - 25
+    $playerHp[0].value = $playerHp[0].value - damage
+  }
+
+  function checker() {
+
+    if ($playerHp[0].value < 1) {
+      alert("You have lost, try again!!")
+      window.location.reload();
+    }
+    else if ($enemyHp[0].value < 1) {
+      alert("You have won, here comes the next challenger")
+      powerUp()
+      level++
+      if (level === 4) {
+        alert("You have won the game!!")
+        window.location.reload();
+      }
+      generateEnemy(level)
+    }
+  }
+}
+
+
+  // create h3 function between player and hp bar, when damage occurs
+  // set a function that will record the damage and
