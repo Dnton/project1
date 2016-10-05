@@ -8,20 +8,35 @@
 // bonus: animation movement, victory music, encounter system.
 
 var currentPlayer = 1
+var enemyRoster = [{ max: 40, src: 'images/Thief.gif'}, {max: 60, src: 'images/Fighter.gif'},
+   {value: 80, max: 80}, {value: 100, max: 100}]
+var $playerHp = $('#healthOne')
+var $enemyHp = $('#healthTwo')
+var level = -1
+function init(){
+$playerHp[0].value = 300
+$playerHp[0].max = 300
+$enemyHp[0].value = 30
+$enemyHp[0].max = 30
+var $initialImage = $('img')
+$initialImage.attr('src', 'images/Fighter.gif' )
+}
+
+init()
 
 function dmgRoll(result) {
   switch(result) {
     case 1:
     case 2:
-      return 1;
+      return 20;
       break;
     case 3:
     case 4:
-      return 2;
+      return 30;
       break;
     case 5:
     case 6:
-      return 3;
+      return 40;
       break;
     }
 }
@@ -34,23 +49,19 @@ function roll() {
   return Math.floor(Math.random()*6) + 1
 }
 
-function clickHandler() {
+function generateEnemy(enemyIndex) {
+   $enemyHp[0].value = enemyRoster[enemyIndex].max
+   $enemyHp[0].max = enemyRoster[enemyIndex].max
+   var $enemyImage = $('img')
+   $enemyImage.attr('src', enemyRoster[enemyIndex].src )
+ }
 
-  var hpBarOne = document.querySelector('#healthOne')
-  var hpBarTwo = document.querySelector('#healthTwo')
-  var hpBarThree = document.createElement('progress')
-  hpBarThree.id = 'healthThree'
-  hpBarThree.class = 'health'
-  hpBarThree.value = 30
-  hpBarThree.max = 10
-  var hpBarFour = document.createElement('progress')
-  hpBarFour.id = 'healthFour'
-  hpBarFour.value = 40
-  hpBarFour.max = 40
-  var hpBarFive = document.createElement('progress')
-  hpBarFive.id = 'healthFive'
-  var hpBarSix = document.createElement('progress')
-  hpBarSix.id = 'healthSix'
+function powerUp () {
+  $playerHp[0].value = $playerHp[0].max + 20
+  $playerHp[0].max = $playerHp[0].max + 20
+}
+
+function clickHandler() {
 
   var hp = document.querySelector('.hp')
 
@@ -64,21 +75,11 @@ function clickHandler() {
   function applyDmg() {
     var damage = dmgRoll(roll())
     if (currentPlayer === 1) {
-      return hpBarTwo.value = hpBarTwo.value - damage
+      return $enemyHp[0].value = $enemyHp[0].value - damage
     } else {
-      return hpBarOne.value = hpBarOne.value - damage
-    // } else {
-    //   return hpBarThree.value = hpBarThree.value - damage
-    // } else {
-    //   return hpBarFour.value = hpBarFour.value - damage
+      return $playerHp[0].value = $playerHp[0].value - damage
     }
-    // if (currentPlayer === 1) {
-    //   return $displayOne.text(damage + ' damage')
-    // } else {
-    //   return $displayTwo.text(damage + ' damage')
-    // }
   }
-
 
   function turnChange() {
     if (currentPlayer === 1) {
@@ -90,24 +91,21 @@ function clickHandler() {
 
   function checker() {
 
-    if (hpBarOne.value < 1) {
+    if ($playerHp[0].value < 1) {
       alert("You have lost, try again!!")
       window.location.reload();
     }
-    if (hpBarTwo.value < 1) {
+    else if ($enemyHp[0].value < 1) {
       alert("You have won, here comes the next challenger")
-      hpBarOne.value = 70
-      hpBarOne.max = 70
-      hp.removeChild(hpBarTwo)
-      hp.appendChild(hpBarThree)
+      powerUp()
+      level++
+      generateEnemy(level)
     }
-    if (hpBarThree.value < 1) {
-      alert("You have won, here comes the next challenger")
-      hpBarOne.value = 80
-      hpBarOne.max = 80
-      hp.removeChild(hpBarThree)
-      hp.appendChild(hpBarFour)
+    if (level === 4) {
+      alert("You have won the game!!")
+      window.location.reload();
     }
+
     // if (hpBarTwo.value < 1) {
     //   alert("You have won, here comes the next challenger")
     //   hpBarOne.value = 90
@@ -123,36 +121,4 @@ function clickHandler() {
     //   console.log(hpBarOne.value)
     // }
   }
-}
-
-function generateEnemy() {
-
-  // if (hpBarTwo.value < 1) {
-  //   alert("You have won, here comes the next challenger")
-  //   hpBarOne.value = 70
-  //   hpBarOne.max = 70
-  //   hpBarTwo.value = 30
-  //   console.log(hpBarOne.value)
-  // }
-  // if (hpBarTwo.value < 1) {
-  //   alert("You have won, here comes the next challenger")
-  //   hpBarOne.value = 80
-  //   hpBarOne.max = 80
-  //   hpBarTwo.value = 40
-  //   console.log(hpBarOne.value)
-  // }
-  // if (hpBarTwo.value < 1) {
-  //   alert("You have won, here comes the next challenger")
-  //   hpBarOne.value = 90
-  //   hpBarOne.max = 90
-  //   hpBarTwo.value = 50
-  //   console.log(hpBarOne.value)
-  // }
-  // if (hpBarTwo.value < 1) {
-  //   alert("You have won, here comes the next challenger")
-  //   hpBarOne.value = 100
-  //   hpBarOne.max = 100
-  //   hpBarTwo.value = 60
-  //   console.log(hpBarOne.value)
-  // }
 }
