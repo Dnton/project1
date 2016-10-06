@@ -1,13 +1,14 @@
 // Make a game where dice rolls determine damage and the human player fights
 // against a computer. Make sure that the functionality which deducts hp after
-// dice has been rolled. Insert background image, background music
-// ask shi hao regarding canvas
+// dice has been rolled.
+// To-do-list: background music
+// ask shi hao regarding canvas, attack animation
 
 // bonus: animation movement, victory music, encounter system.
 
 var currentPlayer = 1
 var enemyRoster = [{ max: 40, src: 'images/monster.png'}, {max: 60, src: 'images/Kefka.gif'},
-   {value: 80, max: 80, src: 'images/Sephiroth.png'}, {value: 100, max: 100, src: 'images/SaferSephiroth.png'}]
+   {max: 80, src: 'images/Sephiroth.png'}, {max: 100, src: 'images/SaferSephiroth.png'}]
 var $playerHp = $('#playerHealth')
 var $enemyHp = $('#enemyHealth')
 var level = -1
@@ -75,6 +76,11 @@ function dmgRoll(result) {
 var $dice = $('.roll');
 
 $dice.on('click', clickHandler)
+$dice.on('mouseover', attackIcon)
+
+function attackIcon() {
+  return "Attack"
+}
 
 function roll() {
   return Math.floor(Math.random()*20) + 1
@@ -116,6 +122,7 @@ function clickHandler() {
 
   function applyDmg() {
     var damage = dmgRoll(roll())
+    flashingText(currentPlayer, damage);
     if (currentPlayer === 1) {
       return $enemyHp[0].value = $enemyHp[0].value - damage
     } else {
@@ -171,14 +178,14 @@ $limitBreak.on('click', kaboom)
 
 function kaboom() {
   var damage = dmgRoll(roll())
-  flash();
+  bladeDraw();
   checker();
 
   $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
   $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max)
 
 
-  function flash() {
+  function bladeDraw() {
     if ($playerHp[0].value <= 20) {
     $enemyHp[0].value = $enemyHp[0].value - 25
     $playerHp[0].value = $playerHp[0].value - damage
@@ -207,4 +214,33 @@ function kaboom() {
 
 // create h3 function between player and hp bar, when damage occurs
 // set a function that will record the damage and
+
+function flashingText(myTurn, dmg) {
+  if (myTurn === 1 && dmg === 15) {
+    $('#cloud').text('FINISHING TOUCH!!')
+  } if (myTurn === 1 && dmg === 16) {
+    $('#cloud').text('CLIMHAZZARD!!')
+  } if (myTurn === 1 && dmg === 20) {
+    $('#cloud').text('METEORAIN!!')
+  }
+
+  if (myTurn === 2 && dmg === 15) {
+    $('#opponent').text('MEGAFLARE!!')
+  } if (myTurn === 2 && dmg === 16) {
+    $('#opponent').text('GAIA RAGE!!')
+  } if (myTurn === 2 && dmg === 20) {
+    $('#opponent').text('METEOR!!!')
+  }
+
+
+    if (myTurn === 2) {
+    $('#cloud').text('Lost ' + dmg + 'hp!').fadeOut(4000, function () {
+      $('#cloud').css('display', 'block')})
+  } if (myTurn === 1){
+    $('#opponent').text('Lost ' + dmg + 'hp!').fadeOut(4000, function () {
+      $('#opponent').css('display', 'block')})
+    // .fadeOut causing text to not reappear
+  }
+}
+
 // add percentages to health activators instead of using a flat number
