@@ -18,8 +18,8 @@ function init () {
   $playerHp[0].max = 50
   $enemyHp[0].value = 30
   $enemyHp[0].max = 30
-  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
-  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max)
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + ' HP')
+  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + ' HP')
   var $initialImageOne = $('img').eq(0)
   $initialImageOne.attr('src', 'images/Cloud.png' )
   var $initialImageTwo = $('img').eq(1)
@@ -117,8 +117,8 @@ function clickHandler() {
   dangerZone();
   turnChange();
   checker();
-  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
-  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max)
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + 'HP')
+  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + 'HP')
 
   function applyDmg() {
     var damage = dmgRoll(roll())
@@ -167,8 +167,12 @@ function heal() {
   if ($playerHp[0].value <= 20) {
     $playerHp[0].value = $playerHp[0].value + 25
     $playerHp[0].value = $playerHp[0].value - damage
+    $('#cloud').css('display', 'block')
+    $('#cloud').text("I'M DOWN BUT NOT OUT!!").fadeOut(3000)
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('DIE!! DIE!! DIE!!').fadeOut(3000)
   }
-  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + 'HP')
   dangerZone()
 }
 
@@ -179,16 +183,23 @@ $limitBreak.on('click', kaboom)
 function kaboom() {
   var damage = dmgRoll(roll())
   bladeDraw();
+  dangerZone();
   checker();
 
-  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
-  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max)
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + 'HP')
+  $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + 'HP')
 
 
   function bladeDraw() {
     if ($playerHp[0].value <= 20) {
     $enemyHp[0].value = $enemyHp[0].value - 25
     $playerHp[0].value = $playerHp[0].value - damage
+    // $('#cloud').css('display', 'block')
+    // $('#cloud').text('Breaking my limits!! This is it!!').fadeOut(1000)
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('SUPREME MARTIAL GOD STRIKE!! OMNISLASH!!').fadeOut(3000)
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('WARGHHH!!').fadeOut(3000)
     }
   }
 
@@ -216,29 +227,48 @@ function kaboom() {
 // set a function that will record the damage and
 
 function flashingText(myTurn, dmg) {
-  if (myTurn === 1 && dmg === 15) {
-    $('#cloud').text('FINISHING TOUCH!!')
+
+  if (myTurn === 1 && dmg < 10) {
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('I NEED TO TRY HARDER!!').fadeOut(1000)
+  } if (myTurn === 1 && dmg > 10) {
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('TAKE THAT!!').fadeOut(1000)
+  } if (myTurn === 1 && dmg === 15) {
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('FINISHING TOUCH!!').fadeOut(1000)
   } if (myTurn === 1 && dmg === 16) {
-    $('#cloud').text('CLIMHAZZARD!!')
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('CLIMHAZZARD!!').fadeOut(1000)
   } if (myTurn === 1 && dmg === 20) {
-    $('#cloud').text('METEORAIN!!')
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('METEORAIN!!').fadeOut(1000)
   }
 
-  if (myTurn === 2 && dmg === 15) {
-    $('#opponent').text('MEGAFLARE!!')
+  if (myTurn === 2 && dmg < 10) {
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('TCH, LUCKY!!').fadeOut(1000)
+  } if (myTurn === 2 && dmg > 10) {
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('HAHAHA!!').fadeOut(1000)
+  } if (myTurn === 2 && dmg === 15) {
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('MEGAFLARE!!').fadeOut(1000)
   } if (myTurn === 2 && dmg === 16) {
-    $('#opponent').text('GAIA RAGE!!')
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('GAIA RAGE!!').fadeOut(1000)
   } if (myTurn === 2 && dmg === 20) {
-    $('#opponent').text('METEOR!!!')
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('CONSUMING DARKNESS!!!').fadeOut(1000)
   }
 
 
     if (myTurn === 2) {
-    $('#cloud').text('Lost ' + dmg + 'hp!').fadeOut(4000, function () {
-      $('#cloud').css('display', 'block')})
+    $('#cloud').css('display', 'block')
+    $('#cloud').text('Lost ' + dmg + 'hp!').fadeOut(1000)
   } if (myTurn === 1){
-    $('#opponent').text('Lost ' + dmg + 'hp!').fadeOut(4000, function () {
-      $('#opponent').css('display', 'block')})
+    $('#opponent').css('display', 'block')
+    $('#opponent').text('Lost ' + dmg + 'hp!').fadeOut(1000)
     // .fadeOut causing text to not reappear
   }
 }

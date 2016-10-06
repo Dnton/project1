@@ -78,7 +78,6 @@ h4 {
 
 .shout {
   display: flex;
-  justify-content: space-between;
   height: 50px;
 }
 
@@ -118,4 +117,12 @@ h4 {
 #hpbar {
   border-bottom: 0px;
   margin-bottom: 10px;
+}
+
+#cloud {
+  align-self: flex-start;
+}
+
+#opponent {
+  margin-left: auto;
 }
