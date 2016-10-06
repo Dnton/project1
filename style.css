@@ -1,6 +1,6 @@
 body {
   background-image: url('images/background.png');
-  background-size: 100%;
+  background-size: cover;
 }
 
 /*width: 100%, cover and hide */
@@ -61,6 +61,11 @@ h4 {
 }
 
 .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.numbers {
   display: flex;
   justify-content: space-between;
 }
