@@ -1,23 +1,25 @@
 // Make a game where dice rolls determine damage and the human player fights
 // against a computer. Make sure that the functionality which deducts hp after
 // dice has been rolled. Insert background image, background music
-
-// maybe create a potion function
 // ask shi hao regarding canvas
 
 // bonus: animation movement, victory music, encounter system.
 
+
+
 var currentPlayer = 1
 var enemyRoster = [{ max: 40, src: 'images/monster.png'}, {max: 60, src: 'images/Sephiroth.png'},
    {value: 80, max: 80, src: 'images/SaferSephiroth.png'}, {value: 100, max: 100}]
-var $playerHp = $('#healthOne')
-var $enemyHp = $('#healthTwo')
+var $playerHp = $('#playerHealth')
+var $enemyHp = $('#enemyHealth')
 var level = -1
+
 function init(){
 $playerHp[0].value = 50
 $playerHp[0].max = 50
 $enemyHp[0].value = 30
 $enemyHp[0].max = 30
+$('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
 var $initialImageOne = $('img').eq(0)
 $initialImageOne.attr('src', 'images/Cloud.png' )
 var $initialImageTwo = $('img').eq(1)
@@ -83,7 +85,6 @@ function generateEnemy(enemyIndex) {
    $enemyHp[0].value = enemyRoster[enemyIndex].max
    $enemyHp[0].max = enemyRoster[enemyIndex].max
    var $enemyImage = $('#enemy')
-   console.log($enemyImage)
    $enemyImage.attr('src', enemyRoster[enemyIndex].src)
  }
 
@@ -92,11 +93,22 @@ function powerUp () {
   $playerHp[0].max = $playerHp[0].max + 20
 }
 
+function dangerZone() {
+  if ($playerHp[0].value <= 20) {
+    $('#playerHealth').addClass('critical')
+  } if ( $enemyHp[0].value <= 20) {
+    $('#enemyHealth').addClass('critical')
+  }
+}
+
 function clickHandler() {
 
   applyDmg();
+  dangerZone();
   turnChange();
   checker();
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
+
 
   function applyDmg() {
     var damage = dmgRoll(roll())
@@ -123,8 +135,9 @@ function clickHandler() {
     }
     else if ($enemyHp[0].value < 1) {
       alert("You have won, here comes the next challenger")
-      powerUp()
       level++
+      alert("You have leveled!")
+      powerUp()
       if (level === 4) {
         alert("You have won the game!!")
         window.location.reload();
@@ -139,8 +152,12 @@ var $potion = $('.potion');
 $potion.on('click', heal)
 
 function heal() {
-  if ($playerHp[0].value <= 20)
-    $playerHp[0].value = $playerHp[0].value + 20
+  var damage = dmgRoll(roll())
+  if ($playerHp[0].value <= 20) {
+    $playerHp[0].value = $playerHp[0].value + 25
+    $playerHp[0].value = $playerHp[0].value - damage
+  }
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
 }
 
 var $limitBreak = $('.limitBreak');
@@ -150,6 +167,8 @@ $limitBreak.on('click', kaboom)
 function kaboom() {
   var damage = dmgRoll(roll())
   checker();
+  $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max)
+
   if ($playerHp[0].value <= 20) {
     $enemyHp[0].value = $enemyHp[0].value - 25
     $playerHp[0].value = $playerHp[0].value - damage
@@ -163,8 +182,9 @@ function kaboom() {
     }
     else if ($enemyHp[0].value < 1) {
       alert("You have won, here comes the next challenger")
-      powerUp()
       level++
+      alert("You have leveled!")
+      powerUp()
       if (level === 4) {
         alert("You have won the game!!")
         window.location.reload();
@@ -174,6 +194,6 @@ function kaboom() {
   }
 }
 
-
-  // create h3 function between player and hp bar, when damage occurs
-  // set a function that will record the damage and
+// create h3 function between player and hp bar, when damage occurs
+// set a function that will record the damage and
+// add percentages to health activators instead of using a flat number

@@ -9,6 +9,51 @@ h4 {
   margin-left: 5px;
 }
 
+.health[value] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 1em;
+    border-radius: 5px;
+    background-color: #bdbdbd;
+  }
+   .health::-webkit-progress-bar {
+     width: 200px;
+     height: 1em;
+     background-color: #bdbdbd;
+     border-radius: 5px;
+   }
+   .health::-webkit-progress-value {
+     width: 200px;
+     height: 1em;
+     border-radius: 5px;
+     background-color: #83c441;
+   }
+
+   .critical[value] {
+       -webkit-appearance: none;
+       appearance: none;
+       width: 200px;
+       height: 1em;
+       border-radius: 5px;
+       background-color: #bdbdbd;
+     }
+   .critical::-webkit-progress-bar {
+        width: 200px;
+        height: 1em;
+        background-color: #bdbdbd;
+        border-radius: 5px;
+      }
+   .critical::-webkit-progress-value {
+        width: 200px;
+        height: 1em;
+        border-radius: 5px;
+        background-color: red;
+      }
+
+   /*!important*/
+
+
 .title {
   display: flex;
   margin-top: 40px;
@@ -22,7 +67,14 @@ h4 {
 
 .hp {
   display: flex;
-  justify-content: space-between;;
+  justify-content: space-between;
+  margin-top: 0px;
+}
+
+.shout {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
 }
 
 .playerOne {
@@ -58,7 +110,7 @@ h4 {
   background-color: white;
 }
 
-.health {
-  height: 60px;
-  width: 150px;
+#hpbar {
+  border-bottom: 0px;
+  margin-bottom: 10px;
 }
