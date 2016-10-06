@@ -117,6 +117,7 @@ function clickHandler() {
   dangerZone();
   turnChange();
   checker();
+  backgroundMusic();
   $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + 'HP')
   $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + 'HP')
 
@@ -156,6 +157,31 @@ function clickHandler() {
       generateEnemy(level)
     }
   }
+  function backgroundMusic() {
+    if (level === -1) {
+    playFirstSong()
+    }
+
+    if (level === 0) {
+    pauseFirstSong()
+    playSecondSong()
+    }
+
+    if (level === 1) {
+    pauseSecondSong()
+    playThirdSong()
+    }
+
+    if (level === 2) {
+    pauseThirdSong()
+    playLastSong()
+    }
+
+    if (level === 3) {
+    pauseLastSong()
+    playLastSong()
+    }
+  }
 }
 
 var $potion = $('.potion');
@@ -185,6 +211,7 @@ function kaboom() {
   bladeDraw();
   dangerZone();
   checker();
+  backgroundMusic();
 
   $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + 'HP')
   $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + 'HP')
@@ -219,6 +246,31 @@ function kaboom() {
         window.location.reload();
       }
       generateEnemy(level)
+    }
+  }
+  function backgroundMusic() {
+    if (level === -1) {
+    playFirstSong()
+    }
+
+    if (level === 0) {
+    pauseFirstSong()
+    playSecondSong()
+    }
+
+    if (level === 1) {
+    pauseSecondSong()
+    playThirdSong()
+    }
+
+    if (level === 2) {
+    pauseThirdSong()
+    playLastSong()
+    }
+
+    if (level === 3) {
+    pauseLastSong()
+    playLastSong()
     }
   }
 }
@@ -269,8 +321,49 @@ function flashingText(myTurn, dmg) {
   } if (myTurn === 1){
     $('#opponent').css('display', 'block')
     $('#opponent').text('Lost ' + dmg + 'hp!').fadeOut(1000)
-    // .fadeOut causing text to not reappear
-  }
+    }
+}
+
+var firstSong = $('#battle')
+
+function playFirstSong() {
+  firstSong[0].play()
+}
+function pauseFirstSong() {
+  firstSong[0].pause()
+  firstSong[0].currentTime = 0;
+}
+
+var secondSong = $('#battleTwo')
+
+function playSecondSong() {
+  secondSong[0].play();
+  console.log("second song being played")
+}
+
+function pauseSecondSong() {
+  secondSong[0].pause();
+  secondSong[0].currentTime = 0;
+}
+
+var thirdSong = $('#battleThree')
+
+function playThirdSong() {
+  thirdSong[0].play();
+}
+function pauseThirdSong() {
+  thirdSong[0].pause();
+  thirdSong[0].currentTime = 0;
+}
+
+var lastSong = $('#battleFour')
+
+function playLastSong() {
+  lastSong[0].play();
+}
+function pauseLastSong() {
+  lastSong[0].pause;
+  lastSong[0].currentTime = 0;
 }
 
 // add percentages to health activators instead of using a flat number
