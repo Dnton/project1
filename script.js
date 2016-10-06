@@ -7,17 +7,70 @@
 // bonus: animation movement, victory music, encounter system.
 
 var currentPlayer = 1
-var enemyRoster = [{ max: 40, src: 'images/monster.png'}, {max: 60, src: 'images/Kefka.gif'},
-  {max: 80, src: 'images/Sephiroth.png'}, {max: 100, src: 'images/SaferSephiroth.png'}]
+var enemyRoster = [{ max: 80, src: 'images/monster.png'}, {max: 100, src: 'images/Kefka.gif'},
+  {max: 120, src: 'images/Sephiroth.png'}, {max: 160, src: 'images/SaferSephiroth.png'}]
 var $playerHp = $('#playerHealth')
 var $enemyHp = $('#enemyHealth')
 var level = -1
 
+var background = $('#intro')
+
+function startMusic () {
+  background[0].play()
+}
+
+function stopIntro () {
+  background[0].pause()
+  background[0].currentTime = 0
+}
+
+var firstSong = $('#battle')
+
+function playFirstSong () {
+  firstSong[0].play()
+}
+
+function pauseFirstSong () {
+  firstSong[0].pause()
+  firstSong[0].currentTime = 0
+}
+
+var secondSong = $('#battleTwo')
+
+function playSecondSong () {
+  secondSong[0].play()
+}
+
+function pauseSecondSong () {
+  secondSong[0].pause()
+  secondSong[0].currentTime = 0
+}
+
+var thirdSong = $('#battleThree')
+
+function playThirdSong () {
+  thirdSong[0].play()
+}
+function pauseThirdSong () {
+  thirdSong[0].pause()
+  thirdSong[0].currentTime = 0
+}
+
+var lastSong = $('#battleFour')
+
+function playLastSong () {
+  lastSong[0].play()
+}
+function pauseLastSong () {
+  lastSong[0].pause
+  lastSong[0].currentTime = 0
+}
+
 function init () {
-  $playerHp[0].value = 50
-  $playerHp[0].max = 50
-  $enemyHp[0].value = 30
-  $enemyHp[0].max = 30
+  $playerHp[0].value = 60
+  $playerHp[0].max = 60
+  $enemyHp[0].value = 60
+  $enemyHp[0].max = 60
   $('#hpbar').text($playerHp[0].value + '/' + $playerHp[0].max + ' HP')
   $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + ' HP')
   var $initialImageOne = $('img').eq(0)
@@ -25,6 +78,7 @@ function init () {
   var $initialImageTwo = $('img').eq(1)
   $initialImageTwo.attr('id', 'enemy')
   $initialImageTwo.attr('src', 'images/Belias.gif')
+  startMusic()
 }
 
 init()
@@ -218,6 +272,7 @@ function clickHandler () {
   }
   function backgroundMusic () {
     if (level === -1) {
+      stopIntro()
       playFirstSong()
     }
 
@@ -256,7 +311,7 @@ function cure() {
 function heal () {
   cure()
   var damage = dmgRoll(roll())
-  if ($playerHp[0].value <= 1000) {
+  if ($playerHp[0].value <= 20) {
     $playerHp[0].value = $playerHp[0].value + 25
     $playerHp[0].value = $playerHp[0].value - damage
     $('#cloud').css('display', 'block')
@@ -289,7 +344,7 @@ function kaboom () {
   $('#enemybar').text($enemyHp[0].value + '/' + $enemyHp[0].max + 'HP')
 
   function bladeDraw () {
-    if ($playerHp[0].value <= 10000) {
+    if ($playerHp[0].value <= 20) {
       $enemyHp[0].value = $enemyHp[0].value - 25
       $playerHp[0].value = $playerHp[0].value - damage
       // $('#cloud').css('display', 'block')
@@ -308,9 +363,9 @@ function kaboom () {
       window.location.reload()
     }
     else if ($enemyHp[0].value < 1) {
-      // alert('You have won, here comes the next challenger')
+      alert('You have won, here comes the next challenger')
       level++
-      // alert('You have leveled!')
+      alert('You have leveled!')
       powerUp()
       if (level === 4) {
         alert('You have won the game!!')
@@ -321,6 +376,7 @@ function kaboom () {
   }
   function backgroundMusic () {
     if (level === -1) {
+      stopIntro()
       playFirstSong()
     }
 
@@ -392,47 +448,4 @@ function flashingText (myTurn, dmg) {
     $('#opponent').text('Lost ' + dmg + 'hp!').fadeOut(1000)
   }
 }
-
-var firstSong = $('#battle')
-
-function playFirstSong () {
-  firstSong[0].play()
-}
-function pauseFirstSong () {
-  firstSong[0].pause()
-  firstSong[0].currentTime = 0
-}
-
-var secondSong = $('#battleTwo')
-
-function playSecondSong () {
-  secondSong[0].play()
-}
-
-function pauseSecondSong () {
-  secondSong[0].pause()
-  secondSong[0].currentTime = 0
-}
-
-
-var thirdSong = $('#battleThree')
-
-function playThirdSong () {
-  thirdSong[0].play()
-}
-function pauseThirdSong () {
-  thirdSong[0].pause()
-  thirdSong[0].currentTime = 0
-}
-
-var lastSong = $('#battleFour')
-
-function playLastSong () {
-  lastSong[0].play()
-}
-function pauseLastSong () {
-  lastSong[0].pause
-  lastSong[0].currentTime = 0
-}
-
 // add percentages to health activators instead of using a flat number
