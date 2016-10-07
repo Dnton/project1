@@ -1,10 +1,13 @@
 // Make a game where dice rolls determine damage and the human player fights
 // against a computer. Make sure that the functionality which deducts hp after
 // dice has been rolled.
-// To-do-list: background music
-// ask shi hao regarding canvas, attack animation
-
+// To-do-list:
+// Research regarding canvas, attack animation
 // bonus: animation movement, victory music, encounter system.
+// Use percentages for hp, cause buttons to look like they've been clicked
+// when interacted with. Boss battle deathcry. Do away with alerts and
+// implement smoother battle transition. Implement Boss AI to take their own turns.
+
 
 var currentPlayer = 1
 var enemyRoster = [{ max: 80, src: 'images/monster.png'}, {max: 100, src: 'images/Kefka.gif'},
@@ -345,7 +348,7 @@ function kaboom () {
 
   function bladeDraw () {
     if ($playerHp[0].value <= 20) {
-      $enemyHp[0].value = $enemyHp[0].value - 25
+      $enemyHp[0].value = $enemyHp[0].value - 30
       $playerHp[0].value = $playerHp[0].value - damage
       // $('#cloud').css('display', 'block')
       // $('#cloud').text('Breaking my limits!! This is it!!').fadeOut(1000)
@@ -401,9 +404,6 @@ function kaboom () {
     }
   }
 }
-
-// create h3 function between player and hp bar, when damage occurs
-// set a function that will record the damage and
 
 function flashingText (myTurn, dmg) {
   if (myTurn === 1 && dmg < 10) {
